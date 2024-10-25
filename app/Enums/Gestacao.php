@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class EspecieRaiva
+class Gestacao
 {
     const PRIMEIRO_TRIMESTRE = 1;
     const SEGUNDO_TRIMESTRE = 2;

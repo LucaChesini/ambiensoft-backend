@@ -11,7 +11,12 @@ class ZoonoseController extends Controller
 {
     public function index()
     {
-        //
+        $zoonoses = Zoonose::all();
+
+        return response()->json([
+            'status' => true,
+            'data' => $zoonoses
+        ], 200);
     }
 
     public function store(ZoonoseRequest $request)
@@ -26,7 +31,12 @@ class ZoonoseController extends Controller
 
     public function show(string $id)
     {
-        //
+        $zoonoses = Zoonose::find($id);
+
+        return response()->json([
+            'status' => true,
+            'data' => $zoonoses
+        ], 200);
     }
 
     public function update(ZoonoseRequest $request, string $id)
