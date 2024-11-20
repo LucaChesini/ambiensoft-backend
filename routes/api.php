@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BairroController;
+use App\Http\Controllers\RuaController;
 use App\Http\Controllers\Zoonoses\RaivaController;
 use App\Http\Controllers\Zoonoses\ZoonoseController;
 use Illuminate\Http\Request;
@@ -28,3 +30,5 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
 Route::apiResource('/zoonoses/raiva', RaivaController::class);
 Route::apiResource('/zoonoses/zoonose', ZoonoseController::class);
+Route::apiResource('/enderecos/bairro', BairroController::class);
+Route::apiResource('/enderecos/rua', RuaController::class);
