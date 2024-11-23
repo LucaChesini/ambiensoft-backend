@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RuaRequest;
+use App\Models\Bairro;
 use Illuminate\Http\Request;
 
 class RuaController extends Controller
@@ -14,7 +15,16 @@ class RuaController extends Controller
 
     public function store(RuaRequest $request)
     {
-        dd('teste');
+        try {
+            $bairro = Bairro::create($request);
+
+            return response()->json([
+                'message' => 'Bairro criado com sucesso!',
+                'data' => $bairro
+            ], 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     public function show(string $id)

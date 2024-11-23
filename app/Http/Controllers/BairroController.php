@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BairroRequest;
+use App\Models\Bairro;
 use Illuminate\Http\Request;
 
 class BairroController extends Controller
@@ -14,7 +15,15 @@ class BairroController extends Controller
 
     public function store(BairroRequest $request)
     {
-        dd('teste');
+        $validateData = $request->validated();
+
+        $bairro = Bairro::create($validateData);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Bairro criado com sucesso!',
+            'data' => $bairro
+        ], 201);
     }
 
     public function show(string $id)

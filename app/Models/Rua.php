@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Rua extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'codigo',
+        'nome',
+        'bairro_id'
+    ];
 }
