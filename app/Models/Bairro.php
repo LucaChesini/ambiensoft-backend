@@ -13,4 +13,9 @@ class Bairro extends Model
         'codigo',
         'nome'
     ];
+
+    public function ruas()
+    {
+        return $this->hasMany(Rua::class);
+    }
 }

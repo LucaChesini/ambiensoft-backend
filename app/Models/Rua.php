@@ -14,4 +14,9 @@ class Rua extends Model
         'nome',
         'bairro_id'
     ];
+
+    public function bairro()
+    {
+        return $this->belongsTo(Bairro::class);
+    }
 }

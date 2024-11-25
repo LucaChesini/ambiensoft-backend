@@ -10,30 +10,74 @@ class BairroController extends Controller
 {
     public function index()
     {
-        dd('sdsafas');
+        try {
+            $bairros = Bairro::get();
+
+            return response()->json([
+                'status' => true,
+                'data' => $bairros
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+
     }
 
     public function store(BairroRequest $request)
     {
-        $validateData = $request->validated();
+        try {
+            $validateData = $request->validated();
+    
+            $bairro = Bairro::create($validateData);
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Bairro criado com sucesso!',
+                'data' => $bairro
+            ], 201);
+        } catch (\Exception $e) {
 
-        $bairro = Bairro::create($validateData);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Bairro criado com sucesso!',
-            'data' => $bairro
-        ], 201);
+        }
     }
 
     public function show(string $id)
     {
-        //
+        try {
+            $bairros = Bairro::find($id);
+
+            return response()->json([
+                'status' => true,
+                'data' => $bairros
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function update(BairroRequest $request, string $id)
     {
-        //
+        try {
+            $bairros = Bairro::find($id);
+
+            return response()->json([
+                'status' => true,
+                'data' => $bairros
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy(string $id)

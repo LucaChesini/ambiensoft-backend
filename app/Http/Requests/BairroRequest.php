@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class BairroRequest extends FormRequest
 {
@@ -16,7 +17,11 @@ class BairroRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'codigo' => 'required|string|unique:bairros,codigo',
+            'codigo' => [
+                'required',
+                'string',
+                Rule::unique('bairros', 'codigo')->ignore($this->route('id'))
+            ],
             'nome' => 'required|string'
         ];
 
