@@ -19,4 +19,9 @@ class Rua extends Model
     {
         return $this->belongsTo(Bairro::class);
     }
+
+    public function zoonoses()
+    {
+        return $this->hasMany(Zoonose::class);
+    }
 }

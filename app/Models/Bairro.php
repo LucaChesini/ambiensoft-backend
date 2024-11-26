@@ -18,4 +18,9 @@ class Bairro extends Model
     {
         return $this->hasMany(Rua::class);
     }
+
+    public function zoonoses()
+    {
+        return $this->hasMany(Zoonose::class);
+    }
 }

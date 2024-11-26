@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
 class Zoonose extends Model
 {
@@ -32,9 +33,8 @@ class Zoonose extends Model
         'municipio_residencia',
         'codigo_ibge',
         'distrito',
-        'bairro',
-        'logradouro',
-        'logradouro_codigo',
+        'bairro_id',
+        'rua_id',
         'numero',
         'complemento',
         'geo_campo_1',
@@ -44,4 +44,14 @@ class Zoonose extends Model
         'zona',
         'pais'
     ];
+
+    public function bairro()
+    {
+        return $this->belongsTo(Bairro::class);
+    }
+
+    public function rua()
+    {
+        return $this->belongsTo(Rua::class);
+    }
 }

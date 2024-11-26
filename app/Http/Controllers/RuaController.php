@@ -46,7 +46,10 @@ class RuaController extends Controller
                 'data' => $rua
             ], 201);
         } catch (\Exception $e) {
-
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -72,8 +75,6 @@ class RuaController extends Controller
                     'message' => 'Rua não encontrada'
                 ], 404);
             }
-
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
