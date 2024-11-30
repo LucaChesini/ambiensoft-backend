@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Raiva extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        
+    ];
+
+    public function zoonose()
+    {
+        return $this->morphOne(Zoonose::class, 'zoonosable');
+    }
 }
