@@ -11,7 +11,11 @@ class ZoonoseController extends Controller
 {
     public function index()
     {
-        $zoonoses = Zoonose::all();
+        $zoonoses = Zoonose::with([
+            'bairro',
+            'rua',
+            'zoonosable'
+        ])->get();
 
         return response()->json([
             'status' => true,
