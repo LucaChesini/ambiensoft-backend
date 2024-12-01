@@ -4,13 +4,13 @@ namespace App\Enums;
 
 class LocalizacaoFerimento
 {
-    const MUCOSA = 'mucosa';
-    const CABECA_PESCOCO = 'cabeca_pescoco';
-    const MAOS = 'maos';
-    const PES = 'pes';
-    const TRONCO = 'tronco';
-    const MEMBROS_SUPERIORES = 'membros_superiores';
-    const MEMBROS_INFERIORES = 'membros_inferiores';
+    const MUCOSA = 1;
+    const CABECA_PESCOCO = 2;
+    const MAOS = 3;
+    const PES = 4;
+    const TRONCO = 5;
+    const MEMBROS_SUPERIORES = 6;
+    const MEMBROS_INFERIORES = 7;
 
     public static function getOptions()
     {

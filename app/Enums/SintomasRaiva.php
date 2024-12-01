@@ -4,14 +4,14 @@ namespace App\Enums;
 
 class SintomasRaiva
 {
-    const AEROFOBIA = 'aerofobia';
-    const PARALISIA = 'paralisia';
-    const HIDROFOBIA = 'hidrofobia';
-    const AGITACAO_PSICOMOTORA = 'agitacao_psicomotora';
-    const DISFAGIA = 'disfagia';
-    const FEBRE = 'febre';
-    const PARESTESIA = 'parestesia';
-    const AGRESSIVIDADE = 'agressividade';
+    const AEROFOBIA = 1;
+    const PARALISIA = 2;
+    const HIDROFOBIA = 3;
+    const AGITACAO_PSICOMOTORA = 4;
+    const DISFAGIA = 5;
+    const FEBRE = 6;
+    const PARESTESIA = 7;
+    const AGRESSIVIDADE = 8;
 
     public static function getOptions()
     {

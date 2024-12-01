@@ -4,10 +4,10 @@ namespace App\Enums;
 
 class TipoExposicaoRaiva
 {
-    const ARRANHAO = 'arranhao';
-    const LAMBEDURA = 'lambedura';
-    const MORDEDURA = 'mordedura';
-    const CONTATO_INDIRETO = 'contato_indireto';
+    const ARRANHAO = 1;
+    const LAMBEDURA = 2;
+    const MORDEDURA = 3;
+    const CONTATO_INDIRETO = 4;
 
     public static function getOptions()
     {
