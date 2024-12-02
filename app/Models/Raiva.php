@@ -47,18 +47,18 @@ class Raiva extends Model
     public function getFerimentoDescricaoAttribute(): ?string
     {
         $options = Ferimento::getOptions();
-        return $options[$this->tipo_exposicao] ?? null;
+        return $options[$this->ferimento] ?? null;
     }
 
     public function getLocalizacaoFerimentoDescricaoAttribute(): ?string
     {
         $options = LocalizacaoFerimento::getOptions();
-        return $options[$this->tipo_exposicao] ?? null;
+        return $options[$this->localizacao_ferimento] ?? null;
     }
 
     public function getEspecieAnimalAgressorDescricaoAttribute(): ?string
     {
         $options = EspecieRaiva::getOptions();
-        return $options[$this->tipo_exposicao] ?? null;
+        return $options[$this->especie_animal_agressor] ?? null;
     }
 }

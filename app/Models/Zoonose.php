@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Zoonoses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
@@ -26,18 +27,28 @@ class Zoonose extends Model
         'numero'
     ];
 
+    protected $appends = [
+        'doenca_descricao'
+    ];
+
     public function bairro()
     {
         return $this->belongsTo(Bairro::class);
     }
-
+    
     public function rua()
     {
         return $this->belongsTo(Rua::class);
     }
-
+    
     public function zoonosable()
     {
         return $this->morphTo();
+    }
+
+    public function getDoencaDescricaoAttribute(): ?string
+    {
+        $options = Zoonoses::getOptions();
+        return $options[$this->doenca] ?? null;
     }
 }
