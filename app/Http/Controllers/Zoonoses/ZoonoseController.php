@@ -13,8 +13,7 @@ class ZoonoseController extends Controller
     {
         $zoonoses = Zoonose::with([
             'bairro',
-            'rua',
-            'zoonosable'
+            'rua'
         ])->get();
 
         return response()->json([

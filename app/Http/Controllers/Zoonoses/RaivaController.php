@@ -81,7 +81,18 @@ class RaivaController extends Controller
     public function show(string $id)
     {
         try {
-            
+            $raiva = Zoonose::with([
+                'bairro',
+                'rua',
+                'zoonosable' => function ($query) {
+                    $query->with('raiva_sintomas');
+                }
+            ])->find($id);
+
+            return response()->json([
+                'status' => true,
+                'data' => $raiva
+            ], 200);
 
         } catch (\Exception $e) {
             return response()->json([

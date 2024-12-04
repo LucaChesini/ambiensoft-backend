@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Sexo;
 use App\Enums\Zoonoses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,8 @@ class Zoonose extends Model
     ];
 
     protected $appends = [
-        'doenca_descricao'
+        'doenca_descricao',
+        'sexo_descricao'
     ];
 
     public function bairro()
@@ -50,5 +52,11 @@ class Zoonose extends Model
     {
         $options = Zoonoses::getOptions();
         return $options[$this->doenca] ?? null;
+    }
+
+    public function getSexoDescricaoAttribute(): ?string
+    {
+        $options = Sexo::getOptions();
+        return $options[$this->sexo] ?? null;
     }
 }
