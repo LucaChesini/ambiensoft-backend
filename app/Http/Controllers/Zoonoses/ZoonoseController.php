@@ -9,12 +9,23 @@ use Illuminate\Http\Request;
 
 class ZoonoseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $zoonoses = Zoonose::with([
-            'bairro',
-            'rua'
-        ])->get();
+        $query = Zoonose::with(['bairro', 'rua', 'zoonosable']);
+
+        if ($request->has('doenca') && !empty($request->doenca)) {
+            $query->where('doenca', $request->doenca);
+        }
+
+        if ($request->has('bairro_id') && !empty($request->bairro_id)) {
+            $query->where('bairro_id', $request->bairro_id);
+        }
+
+        if ($request->has('rua_id') && !empty($request->rua_id)) {
+            $query->where('rua_id', $request->rua_id);
+        }
+
+        $zoonoses = $query->get();
 
         return response()->json([
             'status' => true,

@@ -105,7 +105,38 @@ class RaivaController extends Controller
     public function update(RaivaRequest $request, string $id)
     {
         try {
-            
+            $validateData = $request->validated();
+
+            $zoonose = Zoonose::with('zoonosable')->findOrFail($id);
+
+            $zoonose->update([
+                'doenca' => $validateData['doenca'],
+                'unidade_saude' => $validateData['unidade_saude'],
+                'nome' => $validateData['nome'],
+                'data_nascimento' => $validateData['data_nascimento'],
+                'idade' => $validateData['idade'],
+                'sexo' => $validateData['sexo'],
+                'numero_sus' => $validateData['numero_sus'],
+                'municipio_residencia' => $validateData['municipio_residencia'],
+                'numero' => $validateData['numero'],
+                'bairro_id' => $validateData['bairro_id'],
+                'rua_id' => $validateData['rua_id']
+            ]);
+
+            $raiva = $zoonose->zoonosable;
+            $raiva->update([
+                'tipo_exposicao' => $validateData['tipo_exposicao'],
+                'ferimento' => $validateData['ferimento'],
+                'localizacao_ferimento' => $validateData['localizacao_ferimento'],
+                'especie_animal_agressor' => $validateData['especie_animal_agressor']
+            ]);
+
+            $raiva->raiva_sintomas()->sync($validateData['sintomas']);
+
+            return response()->json([
+                'status' => true,
+                'data' => $zoonose->load(['zoonosable', 'bairro', 'rua'])
+            ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -118,7 +149,19 @@ class RaivaController extends Controller
     public function destroy(string $id)
     {
         try {
-            
+            $zoonose = Zoonose::findOrFail($id);
+
+            if ($zoonose->zoonosable) {
+                $zoonose->zoonosable->raiva_sintomas()->detach();
+                $zoonose->zoonosable->delete();
+            }
+
+            $zoonose->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Registro excluído com sucesso'
+            ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
