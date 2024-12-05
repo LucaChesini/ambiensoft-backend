@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Zoonoses;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LeptospiroseRequest;
+use App\Http\Requests\Zoonoses\LeptospiroseRequest;
 use App\Models\Leptospirose;
 use App\Models\Zoonose;
 use Illuminate\Http\Request;
@@ -13,17 +13,17 @@ class LeptospiroseController extends Controller
     public function index()
     {
         try {
-            $raivas = Zoonose::with([
+            $leptospiroses = Zoonose::with([
                 'bairro',
                 'rua',
                 'zoonosable' => function ($query) {
-                    $query->with('raiva_sintomas');
+                    $query->with(['leptospirose_sintomas', 'leptospirose_situacaos']);
                 }
             ])->get();
 
             return response()->json([
                 'status' => true,
-                'data' => $raivas
+                'data' => $leptospiroses
             ], 200);
 
         } catch (\Exception $e) {
@@ -39,14 +39,10 @@ class LeptospiroseController extends Controller
         try {
             $validateData = $request->validated();
 
-            $raiva = Leptospirose::create([
-                'tipo_exposicao' => $validateData['tipo_exposicao'],
-                'ferimento' => $validateData['ferimento'],
-                'localizacao_ferimento' => $validateData['localizacao_ferimento'],
-                'especie_animal_agressor' => $validateData['especie_animal_agressor'],
-            ]);
+            $leptospirose = Leptospirose::create([]);
 
-            $raiva->raiva_sintomas()->attach($validateData['sintomas']);
+            $leptospirose->leptospirose_sintomas()->attach($validateData['sintomas']);
+            $leptospirose->leptospirose_situacaos()->attach($validateData['situacoes']);
 
             $zoonose = new Zoonose([
                 'doenca' => $validateData['doenca'],
@@ -62,7 +58,7 @@ class LeptospiroseController extends Controller
                 'rua_id' => $validateData['rua_id']
             ]);
 
-            $raiva->zoonose()->save($zoonose);
+            $leptospirose->zoonose()->save($zoonose);
 
             return response()->json([
                 'status' => true,
@@ -80,17 +76,17 @@ class LeptospiroseController extends Controller
     public function show(string $id)
     {
         try {
-            $raiva = Zoonose::with([
+            $leptospirose = Zoonose::with([
                 'bairro',
                 'rua',
                 'zoonosable' => function ($query) {
-                    $query->with('raiva_sintomas');
+                    $query->with(['leptospirose_sintomas', 'leptospirose_situacaos']);
                 }
             ])->find($id);
 
             return response()->json([
                 'status' => true,
-                'data' => $raiva
+                'data' => $leptospirose
             ], 200);
 
         } catch (\Exception $e) {
@@ -122,15 +118,10 @@ class LeptospiroseController extends Controller
                 'rua_id' => $validateData['rua_id']
             ]);
 
-            $raiva = $zoonose->zoonosable;
-            $raiva->update([
-                'tipo_exposicao' => $validateData['tipo_exposicao'],
-                'ferimento' => $validateData['ferimento'],
-                'localizacao_ferimento' => $validateData['localizacao_ferimento'],
-                'especie_animal_agressor' => $validateData['especie_animal_agressor']
-            ]);
+            $leptospirose = $zoonose->zoonosable;
 
-            $raiva->raiva_sintomas()->sync($validateData['sintomas']);
+            $leptospirose->leptospirose_sintomas()->sync($validateData['sintomas']);
+            $leptospirose->leptospirose_situacaos()->sync($validateData['situacoes']);
 
             return response()->json([
                 'status' => true,
@@ -151,7 +142,7 @@ class LeptospiroseController extends Controller
             $zoonose = Zoonose::findOrFail($id);
 
             if ($zoonose->zoonosable) {
-                $zoonose->zoonosable->raiva_sintomas()->detach();
+                $zoonose->zoonosable->leptospirose_sintomas()->detach();
                 $zoonose->zoonosable->delete();
             }
 
