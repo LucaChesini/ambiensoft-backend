@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(SintomaRaivaSeeder::class);
+        $this->call(SintomaLeptospiroseSeeder::class);
+        $this->call(SituacaoLeptospiroseSeeder::class);
     }
 }
