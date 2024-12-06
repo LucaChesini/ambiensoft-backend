@@ -10,7 +10,7 @@ class ArboviroseController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Arbovirose::with(['bairro', 'rua', 'zoonosable']);
+        $query = Arbovirose::with(['bairro', 'rua', 'arbovirosable']);
 
         if ($request->has('doenca') && !empty($request->doenca)) {
             $query->where('doenca', $request->doenca);
@@ -23,6 +23,8 @@ class ArboviroseController extends Controller
         if ($request->has('rua_id') && !empty($request->rua_id)) {
             $query->where('rua_id', $request->rua_id);
         }
+
+        $query->orderBy('id', 'desc');
 
         $zoonoses = $query->paginate(20);
 

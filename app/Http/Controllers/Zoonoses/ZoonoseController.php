@@ -25,6 +25,8 @@ class ZoonoseController extends Controller
             $query->where('rua_id', $request->rua_id);
         }
 
+        $query->orderBy('id', 'desc');
+
         $zoonoses = $query->paginate(20);
 
         return response()->json([
