@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Arboviroses\ArboviroseController;
+use App\Http\Controllers\Arboviroses\ChikungunyaController;
+use App\Http\Controllers\Arboviroses\DengueController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BairroController;
@@ -33,6 +36,9 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 Route::apiResource('/zoonoses/raiva', RaivaController::class);
 Route::apiResource('/zoonoses/leptospirose', LeptospiroseController::class);
 Route::apiResource('/zoonoses/zoonose', ZoonoseController::class);
+Route::apiResource('/arboviroses/dengue', DengueController::class);
+Route::apiResource('/arboviroses/chikungunya', ChikungunyaController::class);
+Route::apiResource('/arboviroses/arbovirose', ArboviroseController::class);
 Route::apiResource('/enderecos/bairro', BairroController::class);
 Route::apiResource('/enderecos/rua', RuaController::class);
 

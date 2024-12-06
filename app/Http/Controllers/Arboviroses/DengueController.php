@@ -13,17 +13,15 @@ class DengueController extends Controller
     public function index()
     {
         try {
-            $raivas = Arbovirose::with([
+            $dengues = Arbovirose::with([
                 'bairro',
                 'rua',
-                'arbovirosable' => function ($query) {
-                    $query->with('dengue_sinais');
-                }
+                'arbovirosable'
             ])->get();
 
             return response()->json([
                 'status' => true,
-                'data' => $raivas
+                'data' => $dengues
             ], 200);
 
         } catch (\Exception $e) {
@@ -39,14 +37,10 @@ class DengueController extends Controller
         try {
             $validateData = $request->validated();
 
-            $raiva = Dengue::create([
-                'tipo_exposicao' => $validateData['tipo_exposicao'],
-                'ferimento' => $validateData['ferimento'],
-                'localizacao_ferimento' => $validateData['localizacao_ferimento'],
-                'especie_animal_agressor' => $validateData['especie_animal_agressor'],
-            ]);
+            $dengue = Dengue::create();
 
-            $raiva->raiva_sintomas()->attach($validateData['sintomas']);
+            $dengue->dengue_sinals()->attach($validateData['sinais']);
+            $dengue->dengue_doencas()->attach($validateData['doencas']);
 
             $arbovirose = new Arbovirose([
                 'doenca' => $validateData['doenca'],
@@ -62,7 +56,7 @@ class DengueController extends Controller
                 'rua_id' => $validateData['rua_id']
             ]);
 
-            $raiva->arbovirose()->save($arbovirose);
+            $dengue->arbovirose()->save($arbovirose);
 
             return response()->json([
                 'status' => true,
@@ -80,17 +74,18 @@ class DengueController extends Controller
     public function show(string $id)
     {
         try {
-            $raiva = Arbovirose::with([
+            $dengue = Arbovirose::with([
                 'bairro',
                 'rua',
                 'arbovirosable' => function ($query) {
-                    $query->with('raiva_sintomas');
+                    $query->with('dengue_sinals');
+                    $query->with('dengue_doencas');
                 }
             ])->find($id);
 
             return response()->json([
                 'status' => true,
-                'data' => $raiva
+                'data' => $dengue
             ], 200);
 
         } catch (\Exception $e) {
@@ -122,15 +117,10 @@ class DengueController extends Controller
                 'rua_id' => $validateData['rua_id']
             ]);
 
-            $raiva = $arbovirose->arbovirosable;
-            $raiva->update([
-                'tipo_exposicao' => $validateData['tipo_exposicao'],
-                'ferimento' => $validateData['ferimento'],
-                'localizacao_ferimento' => $validateData['localizacao_ferimento'],
-                'especie_animal_agressor' => $validateData['especie_animal_agressor']
-            ]);
+            $dengue = $arbovirose->arbovirosable;
 
-            $raiva->raiva_sintomas()->sync($validateData['sintomas']);
+            $dengue->dengue_sinals()->sync($validateData['sinais']);
+            $dengue->dengue_doencas()->sync($validateData['doencas']);
 
             return response()->json([
                 'status' => true,
@@ -151,7 +141,8 @@ class DengueController extends Controller
             $arbovirose = Arbovirose::findOrFail($id);
 
             if ($arbovirose->arbovirosable) {
-                $arbovirose->arbovirosable->raiva_sintomas()->detach();
+                $arbovirose->arbovirosable->dengue_sinals()->detach();
+                $arbovirose->arbovirosable->dengue_doencas()->detach();
                 $arbovirose->arbovirosable->delete();
             }
 

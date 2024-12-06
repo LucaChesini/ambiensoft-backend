@@ -23,4 +23,9 @@ class Bairro extends Model
     {
         return $this->hasMany(Zoonose::class);
     }
+
+    public function arboviroses()
+    {
+        return $this->hasMany(Arbovirose::class);
+    }
 }
