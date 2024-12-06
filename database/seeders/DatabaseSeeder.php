@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SintomaRaivaSeeder::class);
         $this->call(SintomaLeptospiroseSeeder::class);
-        $this->call(SituacaoLeptospiroseSeeder::class);
+        $this->call(SinaisDengueSeeder::class);
+        $this->call(SinaisChikungunyaSeeder::class);
+        $this->call(DoencasDengueSeeder::class);
+        $this->call(DoencasChikungunyaSeeder::class);
     }
 }
